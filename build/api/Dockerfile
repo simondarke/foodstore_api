@@ -12,13 +12,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    locales=2.28  \
-    zip=3.0 \
+    locales  \
+    zip \
     jpegoptim optipng pngquant gifsicle \
     vim \
-    unzip=6 \
-    git=2.20 \
-    curl=7.64 && apt-get clean && rm -rf /var/lib/apt/lists/*
+    unzip \
+    git \
+    curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -L https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit
 RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
