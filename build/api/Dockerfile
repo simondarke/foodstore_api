@@ -7,21 +7,25 @@ COPY composer.lock composer.json /var/www/
 WORKDIR /var/www
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    locales \
-    zip \
+    locales=2.28  \
+    zip=3.0 \
     jpegoptim optipng pngquant gifsicle \
     vim \
-    unzip \
-    git \
-    curl
+    unzip=6 \
+    git=2.20 \
+    curl=7.64 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN curl -L https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit
+RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
+RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
+RUN chmod +x /usr/local/bin/phpunit
+RUN chmod +x /usr/local/bin/phpcs
+RUN chmod +x /usr/local/bin/phpcbf
 
 # Install extensions
 RUN docker-php-ext-install pdo_mysql exif pcntl
