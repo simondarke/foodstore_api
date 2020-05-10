@@ -1,10 +1,12 @@
 FROM php:7.4-fpm
 
+RUN mkdir /code
+
 # Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
+COPY composer.lock composer.json /code/
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /code
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -34,10 +36,10 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
-COPY . /var/www
+COPY . /code
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+COPY --chown=www:www . /code
 
 # Change current user to www
 USER www
