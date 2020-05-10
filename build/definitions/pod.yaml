@@ -49,3 +49,4 @@ spec:
           subPath: nginx.conf
   imagePullSecrets:
     - name: regcred
+  imagePullPolicy: Always
