@@ -20,12 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L https://phar.phpunit.de/phpunit.phar -o /usr/local/bin/phpunit
-RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/local/bin/phpcs
-RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o /usr/local/bin/phpcbf
-RUN chmod +x /usr/local/bin/phpunit
-RUN chmod +x /usr/local/bin/phpcs
-RUN chmod +x /usr/local/bin/phpcbf
 
 # Install extensions
 RUN docker-php-ext-install pdo_mysql exif pcntl
@@ -48,8 +42,7 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
+RUN composer install
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
-
-
