@@ -21,6 +21,7 @@ spec:
     # Our PHP-FPM application
     - image: docker.io/simondarke/foodstore_api:latest
       name: app
+      imagePullPolicy: Always
       volumeMounts:
         - name: shared-files
           mountPath: /var/www
@@ -49,4 +50,3 @@ spec:
           subPath: nginx.conf
   imagePullSecrets:
     - name: regcred
-  imagePullPolicy: Always
